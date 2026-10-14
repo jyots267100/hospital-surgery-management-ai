@@ -126,9 +126,20 @@ class DashboardSummaryResponse(BaseModel):
 
 # ---------- Chat / Agent ----------
 
+class ToolCallPayload(BaseModel):
+    id: str
+    name: str
+    args: dict = Field(default_factory=dict)
+
+
 class ChatMessage(BaseModel):
-    role: str = Field(..., description="'user' or 'assistant'")
-    content: str
+    role: str = Field(..., description="'user', 'assistant', or 'tool'")
+    content: str = ""
+    # Present on an 'assistant' message that triggered one or more tool calls.
+    tool_calls: list[ToolCallPayload] | None = None
+    # Present on a 'tool' message: which tool call this is the result of.
+    tool_call_id: str | None = None
+    name: str | None = None
 
 
 class ChatRequest(BaseModel):

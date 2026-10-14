@@ -103,7 +103,13 @@ only (timeouts, rate limits, 5xx) -- see `docs/agent-workflow.md`.
 - The confirmation workflow relies on the LLM correctly interpreting the
   user's follow-up message as consent; it is not independently verified by a
   separate deterministic check in the chat path (the direct-API/Streamlit
-  admin UI path does have an independent, non-LLM confirmation step).
+  admin UI path does have an independent, non-LLM confirmation step). This was
+  verified end to end against the real Gemini API (cancel -> propose -> "yes,
+  go ahead" -> cancelled), including catching and fixing a related bug where
+  the chat history round-trip was silently dropping the structured tool-call
+  record between HTTP turns -- see `docs/agent-workflow.md` for details. The
+  remaining limitation is specifically about natural-language consent
+  judgment, not about whether the plumbing carries context correctly.
 - This system has not been red-teamed against adversarial prompt injection at
   scale; the defenses above are architectural and tested against one concrete
   fixture, not proven unbreakable.

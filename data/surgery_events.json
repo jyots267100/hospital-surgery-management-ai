@@ -12,7 +12,7 @@
   {
     "event_id": "E2001P",
     "surgery_id": "S1001",
-    "timestamp": "2026-10-14T16:20:07.541983",
+    "timestamp": "2026-10-14T16:40:03.399626",
     "event_type": "status_changed",
     "description": "Surgery S1001 marked completed.",
     "actor": "system_seed",
@@ -32,7 +32,7 @@
   {
     "event_id": "E2002P",
     "surgery_id": "S1002",
-    "timestamp": "2026-10-14T16:20:07.541983",
+    "timestamp": "2026-10-14T16:40:03.399626",
     "event_type": "status_changed",
     "description": "Surgery S1002 marked completed.",
     "actor": "system_seed",
@@ -52,7 +52,7 @@
   {
     "event_id": "E2003C",
     "surgery_id": "S1003",
-    "timestamp": "2026-10-14T16:20:07.541983",
+    "timestamp": "2026-10-14T16:40:03.399626",
     "event_type": "surgery_cancelled",
     "description": "Surgery S1003 cancelled: Patient developed fever; rescheduled per Surgery Cancellation Policy.",
     "actor": "system_seed",
@@ -82,7 +82,7 @@
   {
     "event_id": "E2005D",
     "surgery_id": "S1005",
-    "timestamp": "2026-10-14T16:20:07.541983",
+    "timestamp": "2026-10-14T16:40:03.399626",
     "event_type": "surgery_delayed",
     "description": "Surgery S1005 delayed by 45 minutes: Preceding emergency case overran in OR-3.",
     "actor": "system_seed",
@@ -112,7 +112,7 @@
   {
     "event_id": "E2007D",
     "surgery_id": "S1007",
-    "timestamp": "2026-10-14T16:20:07.541983",
+    "timestamp": "2026-10-14T16:40:03.399626",
     "event_type": "surgery_delayed",
     "description": "Surgery S1007 delayed by 30 minutes: Awaiting updated cardiology clearance.",
     "actor": "system_seed",

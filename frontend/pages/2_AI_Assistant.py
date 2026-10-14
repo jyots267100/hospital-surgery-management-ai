@@ -59,9 +59,10 @@ if user_input:
             st.session_state.chat_messages.append({
                 "role": "assistant", "content": result["response"], "citations": result.get("citations", []),
             })
-            st.session_state.chat_history_payload = [
-                {"role": h["role"], "content": h["content"]} for h in result["history"]
-            ]
+            # Round-trip the full message structure (including tool_calls/tool_call_id)
+            # as returned by the API -- stripping to {role, content} would break the
+            # agent's multi-turn confirmation workflow (see app/agent/service.py).
+            st.session_state.chat_history_payload = result["history"]
             st.session_state.pending_action = result.get("pending_action")
             if result.get("confirmation_status") == "pending":
                 st.info("This assistant reply is proposing a change. Reply to confirm or decline.")

@@ -1,11 +1,21 @@
 """Top-level entry point for running one agent turn: wires a fresh ToolContext
 (so the authenticated actor is correctly scoped) and the compiled LangGraph,
 then converts chat history into LangChain messages and back.
+
+The chat API is stateless (the client round-trips `history`), but the history
+must preserve the FULL message structure -- including tool calls and tool
+results, not just the final text -- across HTTP turns. Without that, a model
+asked to confirm a pending write (e.g. "yes, cancel it") sees only its own
+prior plain-text message and has no structured record that it already called
+cancel_surgery(confirmed=false); it then has no reliable way to know it should
+call the same tool again with confirmed=true. So `history` here round-trips
+HumanMessage / AIMessage(+tool_calls) / ToolMessage faithfully, not a
+simplified {role, content} pair.
 """
 from __future__ import annotations
 
 from langchain_core.language_models.chat_models import BaseChatModel
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage, ToolMessage
 
 from app.agent.graph import build_agent_graph
 from app.dependencies import Container
@@ -44,11 +54,40 @@ class ChatTurnResult:
 def _history_to_messages(history: list[dict]) -> list[BaseMessage]:
     messages: list[BaseMessage] = []
     for turn in history:
-        if turn["role"] == "user":
-            messages.append(HumanMessage(content=turn["content"]))
-        elif turn["role"] == "assistant":
-            messages.append(AIMessage(content=turn["content"]))
+        role = turn.get("role")
+        if role == "user":
+            messages.append(HumanMessage(content=turn.get("content") or ""))
+        elif role == "assistant":
+            tool_calls = turn.get("tool_calls") or []
+            messages.append(AIMessage(content=turn.get("content") or "", tool_calls=tool_calls))
+        elif role == "tool":
+            messages.append(ToolMessage(
+                content=turn.get("content") or "",
+                tool_call_id=turn.get("tool_call_id") or "",
+                name=turn.get("name"),
+            ))
     return messages
+
+
+def _messages_to_history(messages: list[BaseMessage]) -> list[dict]:
+    history: list[dict] = []
+    for msg in messages:
+        if isinstance(msg, SystemMessage):
+            continue  # re-added automatically by agent_node; never round-tripped
+        if isinstance(msg, HumanMessage):
+            history.append({"role": "user", "content": msg.content})
+        elif isinstance(msg, AIMessage):
+            entry = {"role": "assistant", "content": msg.content}
+            if msg.tool_calls:
+                entry["tool_calls"] = [
+                    {"id": c["id"], "name": c["name"], "args": c["args"]} for c in msg.tool_calls
+                ]
+            history.append(entry)
+        elif isinstance(msg, ToolMessage):
+            history.append({
+                "role": "tool", "content": msg.content, "tool_call_id": msg.tool_call_id, "name": msg.name,
+            })
+    return history
 
 
 def run_chat_turn(container: Container, message: str, history: list[dict] | None, actor: str) -> ChatTurnResult:
@@ -95,9 +134,7 @@ def run_chat_turn(container: Container, message: str, history: list[dict] | None
     retrieved_context = final_state.get("retrieved_context") or {}
     citations = retrieved_context.get("citations", []) if isinstance(retrieved_context, dict) else []
 
-    new_history = list(history or [])
-    new_history.append({"role": "user", "content": message})
-    new_history.append({"role": "assistant", "content": final_response})
+    new_history = _messages_to_history(final_state["messages"])
 
     return ChatTurnResult(
         final_response=final_response,

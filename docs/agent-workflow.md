@@ -39,6 +39,29 @@ invocation appends to history rather than overwriting it -- this is what lets a
 confirmation flow span two separate HTTP requests (two chat turns) while still
 being "the same conversation" from the LLM's point of view.
 
+### A real bug this caught: history round-tripping must preserve tool calls
+
+The `/api/v1/chat` endpoint is stateless -- there is no server-side session, so
+the client (Streamlit, or any API caller) sends the prior conversation back as
+`history` on every request, and the agent reconstructs LangChain messages from
+it (`app/agent/service.py`). The first version of that reconstruction only
+kept `{role, content}` per turn -- plain text. That passed every test written
+against a scripted fake model (`tests/fakes.py`), because the fake model
+doesn't actually look at its input to decide what to do next.
+
+It failed against the real Gemini API: after proposing a cancellation
+(`cancel_surgery(confirmed=false)`), a follow-up "yes, go ahead" sometimes made
+the model respond with a repeated clarifying question instead of calling
+`cancel_surgery(confirmed=true)` again -- because, from the reconstructed
+history, the model had no structured record that it had ever called a tool at
+all; it only saw its own prior sentence as plain text. The fix: `history` now
+round-trips full `AIMessage.tool_calls` and `ToolMessage` content, not just
+text (`_messages_to_history` / `_history_to_messages` in
+`app/agent/service.py`), and `tests/test_agent.py` locks in both the
+serialization fidelity and the full two-call flow. This is precisely why the
+test suite's scripted-fake-model tests are necessary-but-not-sufficient --
+the real-model smoke test against Gemini is what surfaced this gap.
+
 ## The confirmation workflow, concretely
 
 Every write tool (`cancel_surgery`, `create_surgery`, `reschedule_surgery`,

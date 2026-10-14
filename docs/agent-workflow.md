@@ -62,6 +62,50 @@ serialization fidelity and the full two-call flow. This is precisely why the
 test suite's scripted-fake-model tests are necessary-but-not-sufficient --
 the real-model smoke test against Gemini is what surfaced this gap.
 
+### Three more bugs found live-testing the other write flows
+
+With the history fix in place, all four write flows (`cancel_surgery`,
+`create_surgery`, `reschedule_surgery`, `update_surgery_status`) were
+exercised end to end against a real model (Gemini, and a local Ollama model
+once the Gemini free-tier daily quota was exhausted mid-session -- both use
+the identical graph/tool code path, so the findings apply equally). That
+surfaced three more real, fixed bugs, none of which any scripted-fake-model
+test could have caught, because each is specifically about how a *real*
+model behaves, not about the graph's control flow:
+
+1. **No current-date anchor.** Asked to schedule a surgery "tomorrow," the
+   model resolved "tomorrow" from its training data rather than the real
+   current date, producing a plausible-looking but wrong `scheduled_date`
+   (e.g. a date from 2024). The confirmation workflow caught it before
+   anything was written, but the *proposal itself* was wrong -- easy to miss
+   if a user didn't check the date closely. Fixed by
+   `app/agent/prompts.py::render_system_prompt()`, which appends the real
+   current date (and weekday) to the system prompt on every turn, recomputed
+   live rather than baked into a static string.
+2. **Explicit `null` for defaulted tool arguments.** A local model emitted
+   `{"duration_minutes": null, "priority": null, "confirmed": null}` instead
+   of omitting those keys. Pydantic only applies a field's default when a key
+   is *absent*; an explicit `null` for an `int`/`bool`/`str` field still fails
+   validation, so the tool call raised and the request had to be retried.
+   Fixed with a reusable `field_validator` (`app/tools/schema.py::
+   _none_becomes_default`) that treats an explicit null the same as omitted
+   for every optional/defaulted argument across all four write-tool schemas.
+3. **Mixed timezone-naive/aware timestamps crashed audit history.** The
+   synthetic data generator wrote naive timestamps while `EventService.
+   add_event` always writes `datetime.now(timezone.utc)` (aware); sorting a
+   surgery's events mixed both and Python raises on comparing a naive and an
+   aware datetime -- so `GET /surgeries/{id}/events` 500'd for *any* seeded
+   surgery that was ever written to live (i.e. almost any real usage).
+   Fixed at both ends: the generator now writes aware timestamps
+   (`scripts/generate_synthetic_data.py`), and `EventRepository.
+   find_by_surgery` normalizes a naive timestamp to UTC before comparing
+   (`app/repositories/event_repository.py::_sortable_timestamp`) so the sort
+   can never crash regardless of where a timestamp originated.
+
+All three have regression tests (`tests/test_agent.py`,
+`tests/test_tools.py`, `tests/test_repositories.py`) that reproduce the exact
+failure shape without needing a live model or API key.
+
 ## The confirmation workflow, concretely
 
 Every write tool (`cancel_surgery`, `create_surgery`, `reschedule_surgery`,

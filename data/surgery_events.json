@@ -2,7 +2,7 @@
   {
     "event_id": "E2001",
     "surgery_id": "S1001",
-    "timestamp": "2026-10-10T09:00:00",
+    "timestamp": "2026-10-10T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1001 scheduled for Ramesh Gupta (Knee Replacement) with Dr. Ananya Sharma in OR-1.",
     "actor": "system_seed",
@@ -12,7 +12,7 @@
   {
     "event_id": "E2001P",
     "surgery_id": "S1001",
-    "timestamp": "2026-10-14T16:40:03.399626",
+    "timestamp": "2026-10-14T11:35:46.801801+00:00",
     "event_type": "status_changed",
     "description": "Surgery S1001 marked completed.",
     "actor": "system_seed",
@@ -22,7 +22,7 @@
   {
     "event_id": "E2002",
     "surgery_id": "S1002",
-    "timestamp": "2026-10-10T09:00:00",
+    "timestamp": "2026-10-10T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1002 scheduled for Sunita Verma (Appendectomy) with Dr. Kavita Nair in OR-3.",
     "actor": "system_seed",
@@ -32,7 +32,7 @@
   {
     "event_id": "E2002P",
     "surgery_id": "S1002",
-    "timestamp": "2026-10-14T16:40:03.399626",
+    "timestamp": "2026-10-14T11:35:46.801801+00:00",
     "event_type": "status_changed",
     "description": "Surgery S1002 marked completed.",
     "actor": "system_seed",
@@ -42,7 +42,7 @@
   {
     "event_id": "E2003",
     "surgery_id": "S1003",
-    "timestamp": "2026-10-10T09:00:00",
+    "timestamp": "2026-10-10T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1003 scheduled for Arvind Joshi (Coronary Artery Bypass) with Dr. Rohan Mehta in OR-2.",
     "actor": "system_seed",
@@ -52,7 +52,7 @@
   {
     "event_id": "E2003C",
     "surgery_id": "S1003",
-    "timestamp": "2026-10-14T16:40:03.399626",
+    "timestamp": "2026-10-14T11:35:46.801801+00:00",
     "event_type": "surgery_cancelled",
     "description": "Surgery S1003 cancelled: Patient developed fever; rescheduled per Surgery Cancellation Policy.",
     "actor": "system_seed",
@@ -62,7 +62,7 @@
   {
     "event_id": "E2004",
     "surgery_id": "S1004",
-    "timestamp": "2026-10-11T09:00:00",
+    "timestamp": "2026-10-11T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1004 scheduled for Meena Pillai (Hip Replacement) with Dr. Ananya Sharma in OR-1.",
     "actor": "system_seed",
@@ -72,7 +72,7 @@
   {
     "event_id": "E2005",
     "surgery_id": "S1005",
-    "timestamp": "2026-10-11T09:00:00",
+    "timestamp": "2026-10-11T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1005 scheduled for Deepak Chawla (Hernia Repair) with Dr. Kavita Nair in OR-3.",
     "actor": "system_seed",
@@ -82,7 +82,7 @@
   {
     "event_id": "E2005D",
     "surgery_id": "S1005",
-    "timestamp": "2026-10-14T16:40:03.399626",
+    "timestamp": "2026-10-14T11:35:46.801801+00:00",
     "event_type": "surgery_delayed",
     "description": "Surgery S1005 delayed by 45 minutes: Preceding emergency case overran in OR-3.",
     "actor": "system_seed",
@@ -92,7 +92,7 @@
   {
     "event_id": "E2006",
     "surgery_id": "S1006",
-    "timestamp": "2026-10-11T09:00:00",
+    "timestamp": "2026-10-11T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1006 scheduled for Lakshmi Reddy (Tonsillectomy) with Dr. Priya Iyer in OR-4.",
     "actor": "system_seed",
@@ -102,7 +102,7 @@
   {
     "event_id": "E2007",
     "surgery_id": "S1007",
-    "timestamp": "2026-10-11T09:00:00",
+    "timestamp": "2026-10-11T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1007 scheduled for Sanjay Bhatt (Coronary Artery Bypass) with Dr. Rohan Mehta in OR-2.",
     "actor": "system_seed",
@@ -112,7 +112,7 @@
   {
     "event_id": "E2007D",
     "surgery_id": "S1007",
-    "timestamp": "2026-10-14T16:40:03.399626",
+    "timestamp": "2026-10-14T11:35:46.801801+00:00",
     "event_type": "surgery_delayed",
     "description": "Surgery S1007 delayed by 30 minutes: Awaiting updated cardiology clearance.",
     "actor": "system_seed",
@@ -122,7 +122,7 @@
   {
     "event_id": "E2008",
     "surgery_id": "S1008",
-    "timestamp": "2026-10-11T09:00:00",
+    "timestamp": "2026-10-11T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1008 scheduled for Anita Desai (Kidney Stone Removal) with Dr. Arjun Kapoor in OR-5.",
     "actor": "system_seed",
@@ -132,7 +132,7 @@
   {
     "event_id": "E2009",
     "surgery_id": "S1009",
-    "timestamp": "2026-10-11T09:00:00",
+    "timestamp": "2026-10-11T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1009 scheduled for Manoj Tiwari (Craniotomy) with Dr. Vikram Rao in OR-4.",
     "actor": "system_seed",
@@ -142,7 +142,7 @@
   {
     "event_id": "E2010",
     "surgery_id": "S1010",
-    "timestamp": "2026-10-11T09:00:00",
+    "timestamp": "2026-10-11T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1010 scheduled for Pooja Malhotra (Spinal Fusion) with Dr. Ananya Sharma in OR-1.",
     "actor": "system_seed",
@@ -152,7 +152,7 @@
   {
     "event_id": "E2011",
     "surgery_id": "S1011",
-    "timestamp": "2026-10-11T09:00:00",
+    "timestamp": "2026-10-11T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1011 scheduled for Ravi Kulkarni (Cataract Surgery) with Dr. Kavita Nair in OR-3.",
     "actor": "system_seed",
@@ -162,7 +162,7 @@
   {
     "event_id": "E2012",
     "surgery_id": "S1012",
-    "timestamp": "2026-10-12T09:00:00",
+    "timestamp": "2026-10-12T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1012 scheduled for Shalini Menon (Knee Replacement) with Dr. Ananya Sharma in OR-2.",
     "actor": "system_seed",
@@ -172,7 +172,7 @@
   {
     "event_id": "E2013",
     "surgery_id": "S1013",
-    "timestamp": "2026-10-12T09:00:00",
+    "timestamp": "2026-10-12T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1013 scheduled for Suresh Yadav (Tonsillectomy) with Dr. Priya Iyer in OR-4.",
     "actor": "system_seed",
@@ -182,7 +182,7 @@
   {
     "event_id": "E2014",
     "surgery_id": "S1014",
-    "timestamp": "2026-10-12T09:00:00",
+    "timestamp": "2026-10-12T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1014 scheduled for Geeta Agarwal (Cystoscopy) with Dr. Arjun Kapoor in OR-5.",
     "actor": "system_seed",
@@ -192,7 +192,7 @@
   {
     "event_id": "E2015",
     "surgery_id": "S1015",
-    "timestamp": "2026-10-12T09:00:00",
+    "timestamp": "2026-10-12T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1015 scheduled for Naveen Shetty (Coronary Artery Bypass) with Dr. Rohan Mehta in OR-2.",
     "actor": "system_seed",
@@ -202,7 +202,7 @@
   {
     "event_id": "E2016",
     "surgery_id": "S1016",
-    "timestamp": "2026-10-13T09:00:00",
+    "timestamp": "2026-10-13T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1016 scheduled for Kiran Bedi Rao (Gallbladder Removal) with Dr. Kavita Nair in OR-3.",
     "actor": "system_seed",
@@ -212,7 +212,7 @@
   {
     "event_id": "E2017",
     "surgery_id": "S1017",
-    "timestamp": "2026-10-13T09:00:00",
+    "timestamp": "2026-10-13T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1017 scheduled for Ashok Pandey (Craniotomy) with Dr. Vikram Rao in OR-4.",
     "actor": "system_seed",
@@ -222,7 +222,7 @@
   {
     "event_id": "E2018",
     "surgery_id": "S1018",
-    "timestamp": "2026-10-14T09:00:00",
+    "timestamp": "2026-10-14T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1018 scheduled for Rekha Saxena (Hip Replacement) with Dr. Ananya Sharma in OR-1.",
     "actor": "system_seed",
@@ -232,7 +232,7 @@
   {
     "event_id": "E2019",
     "surgery_id": "S1019",
-    "timestamp": "2026-10-14T09:00:00",
+    "timestamp": "2026-10-14T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1019 scheduled for Vijay Kumar (Kidney Stone Removal) with Dr. Arjun Kapoor in OR-5.",
     "actor": "system_seed",
@@ -242,7 +242,7 @@
   {
     "event_id": "E2020",
     "surgery_id": "S1020",
-    "timestamp": "2026-10-15T09:00:00",
+    "timestamp": "2026-10-15T09:00:00+00:00",
     "event_type": "surgery_created",
     "description": "Surgery S1020 scheduled for Nisha Thakur (Tonsillectomy) with Dr. Priya Iyer in OR-4.",
     "actor": "system_seed",

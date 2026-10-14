@@ -232,16 +232,21 @@ pytest
 pytest --cov=app --cov-report=term-missing
 ```
 
-104 tests across repositories, services, tools, RAG, agent routing (via a
+108 tests across repositories, services, tools, RAG, agent routing (via a
 scripted fake LLM, no API key required), the API, and security. Current
 coverage: **93%** (measured, not claimed as 100% -- see `docs/evaluation.md`
 for the honest gaps, mainly the live-LLM-calling code paths).
 
-The full write-confirmation workflow (`cancel_surgery`: propose -> confirm ->
-execute) has also been manually verified end to end against the real Gemini
-API, through both the raw API and the Streamlit chat UI -- this is what
-surfaced and led to fixing a real bug in the chat history round-trip (see
-`docs/agent-workflow.md`, "A real bug this caught").
+All four write flows (`create_surgery`, `reschedule_surgery`,
+`update_surgery_status`, `cancel_surgery` -- each propose -> confirm ->
+execute) have also been manually verified end to end against real LLMs
+(Gemini and, once Gemini's free-tier daily quota ran out mid-session, a local
+Ollama model using the identical graph/tool code path), through both the raw
+API and the Streamlit chat UI. This live testing surfaced and led to fixing
+four real bugs that no amount of scripted-fake-model unit testing could have
+caught -- see `docs/agent-workflow.md`, "A real bug this caught" and "Three
+more bugs found live-testing the other write flows," for what they were and
+how they were fixed.
 
 ## 18. Evaluation
 

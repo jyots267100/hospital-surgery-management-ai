@@ -57,3 +57,34 @@ def test_persistence_survives_new_repository_instance(data_dir):
 
     repo_b = SurgeonRepository(data_dir)
     assert repo_b.get_by_id("SG050") is not None
+
+
+def test_find_by_surgery_handles_mixed_naive_and_aware_timestamps(data_dir):
+    """Regression test: found live -- a surgery with one seed event carrying a
+    timezone-naive timestamp and one live-added event carrying a
+    timezone-aware timestamp (datetime.now(timezone.utc), as EventService
+    always writes) used to raise `TypeError: can't compare offset-naive and
+    offset-aware datetimes` on every GET .../events call, a 500 for any
+    pre-seeded surgery that was ever written to live."""
+    import json
+
+    from app.repositories.event_repository import EventRepository
+
+    events_path = data_dir / "surgery_events.json"
+    events_path.write_text(json.dumps([
+        {
+            "event_id": "E1", "surgery_id": "S1001", "timestamp": "2026-10-11T09:00:00",
+            "event_type": "surgery_created", "description": "seed event, naive timestamp",
+            "actor": "system_seed", "previous_value": None, "new_value": "scheduled",
+        },
+        {
+            "event_id": "E2", "surgery_id": "S1001", "timestamp": "2026-10-14T10:00:00+00:00",
+            "event_type": "status_changed", "description": "live event, aware timestamp",
+            "actor": "staff_user", "previous_value": "scheduled", "new_value": "confirmed",
+        },
+    ]), encoding="utf-8")
+
+    repo = EventRepository(data_dir)
+    events = repo.find_by_surgery("S1001")  # must not raise
+
+    assert [e.event_id for e in events] == ["E1", "E2"]

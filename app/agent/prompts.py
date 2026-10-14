@@ -3,6 +3,9 @@
 Kept in one place so the confirmation protocol, scope limits, and prompt-injection
 defenses are easy to audit and test against (see tests/test_security.py).
 """
+from __future__ import annotations
+
+from datetime import date
 
 SYSTEM_PROMPT = """\
 You are the Hospital Surgery Management AI Agent, an internal operations assistant \
@@ -54,3 +57,27 @@ e.g. "[Hospital Cancellation Policy - Page 4]".
 Be concise, professional, and precise -- this is an internal operations tool, not a \
 general-purpose chatbot.
 """
+
+
+def render_system_prompt(today: date | None = None) -> str:
+    """Appends the real current date to the static system prompt.
+
+    Found via live testing: without this, a model resolves relative dates like
+    "today"/"tomorrow" from its training-time assumptions rather than the
+    actual current date, producing a plausible-looking but wrong
+    scheduled_date (e.g. "tomorrow" -> a date years in the past). The
+    confirmation workflow still caught it before anything was written, but the
+    proposal itself was wrong, which would have been easy to miss if a user
+    didn't check the date closely.
+    """
+    current_date = today or date.today()
+    return (
+        f"{SYSTEM_PROMPT}\n"
+        f"CURRENT DATE\n"
+        f"- Today's real-world date is {current_date.isoformat()} "
+        f"({current_date.strftime('%A')}).\n"
+        f"- Resolve all relative dates (\"today\", \"tomorrow\", \"next Monday\", "
+        f"\"in two weeks\") against this date, not against any date you might "
+        f"otherwise assume. Always pass scheduled_date/new_date to tools as an "
+        f"explicit YYYY-MM-DD computed from this current date.\n"
+    )

@@ -10,7 +10,7 @@ All data is synthetic and fictional. No real patient information is used.
 from __future__ import annotations
 
 import json
-from datetime import date, datetime, time, timedelta
+from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -69,7 +69,10 @@ def build_patients() -> list[dict]:
 
 
 def iso_now() -> str:
-    return datetime.now().isoformat()
+    # Timezone-aware (UTC), matching EventService.add_event -- mixing naive and
+    # aware datetimes in the same list breaks sorting (see event_repository.py's
+    # find_by_surgery, which sorts by timestamp across seed + live-written events).
+    return datetime.now(timezone.utc).isoformat()
 
 
 def build_surgeries(patients: list[dict]) -> tuple[list[dict], list[dict]]:
@@ -99,7 +102,9 @@ def build_surgeries(patients: list[dict]) -> tuple[list[dict], list[dict]]:
         surgeon = SURGEONS[surgeon_idx]
         room = OPERATING_ROOMS[room_idx]
         scheduled_date = today + timedelta(days=offset_days)
-        created_at = datetime.combine(scheduled_date - timedelta(days=3), time(9, 0)).isoformat()
+        created_at = datetime.combine(
+            scheduled_date - timedelta(days=3), time(9, 0), tzinfo=timezone.utc,
+        ).isoformat()
         record = {
             "surgery_id": surgery_id,
             "patient_id": patient["patient_id"],

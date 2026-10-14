@@ -4,8 +4,28 @@ LangChain `args_schema` for each tool and as the contract tests validate against
 from __future__ import annotations
 
 from datetime import date, time
+from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
+
+
+def _none_becomes_default(*field_names: str):
+    """Some tool-calling models (observed with a local Llama 3.1 via Ollama)
+    emit an explicit `null` for an optional/defaulted argument instead of
+    omitting it -- e.g. {"duration_minutes": null} rather than leaving it out.
+    Pydantic only applies a field's default when the key is absent, so an
+    explicit null for an `int`/`bool`/`str` field still fails validation.
+    This validator treats an explicit null the same as "omitted" for the
+    named fields, falling back to each field's own default."""
+
+    @field_validator(*field_names, mode="before")
+    @classmethod
+    def _coerce(cls, value: Any, info) -> Any:  # noqa: ANN401
+        if value is None:
+            return cls.model_fields[info.field_name].default
+        return value
+
+    return _coerce
 
 
 class GetTodaysSurgeriesArgs(BaseModel):
@@ -31,6 +51,8 @@ class CancelSurgeryArgs(BaseModel):
         False, description="True only once the user has explicitly confirmed the cancellation.",
     )
 
+    _coerce_nulls = _none_becomes_default("confirmed")
+
 
 class CreateSurgeryArgs(BaseModel):
     patient_id: str = Field(..., description="Registered patient identifier, e.g. 'P102'.")
@@ -45,6 +67,8 @@ class CreateSurgeryArgs(BaseModel):
         False, description="True only once the user has explicitly confirmed the new surgery.",
     )
 
+    _coerce_nulls = _none_becomes_default("duration_minutes", "priority", "confirmed")
+
 
 class RescheduleSurgeryArgs(BaseModel):
     surgery_id: str = Field(..., description="The surgery identifier to reschedule.")
@@ -54,6 +78,8 @@ class RescheduleSurgeryArgs(BaseModel):
     confirmed: bool = Field(
         False, description="True only once the user has explicitly confirmed the reschedule.",
     )
+
+    _coerce_nulls = _none_becomes_default("confirmed")
 
 
 class UpdateSurgeryStatusArgs(BaseModel):
@@ -66,6 +92,8 @@ class UpdateSurgeryStatusArgs(BaseModel):
     confirmed: bool = Field(
         False, description="True only once the user has explicitly confirmed the status change.",
     )
+
+    _coerce_nulls = _none_becomes_default("confirmed")
 
 
 class GetOperatingRoomAvailabilityArgs(BaseModel):

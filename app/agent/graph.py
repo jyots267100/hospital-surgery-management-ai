@@ -18,7 +18,7 @@ from langchain_core.messages import AIMessage, SystemMessage, ToolMessage
 from langgraph.graph import END, StateGraph
 from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
-from app.agent.prompts import SYSTEM_PROMPT
+from app.agent.prompts import render_system_prompt
 from app.agent.state import AgentState
 from app.core.exceptions import DomainError
 from app.core.logging_config import Timer, log_event
@@ -58,7 +58,7 @@ def build_agent_graph(chat_model: BaseChatModel, tool_ctx: ToolContext):
     def agent_node(state: AgentState) -> dict:
         messages = state["messages"]
         if not messages or not isinstance(messages[0], SystemMessage):
-            messages = [SystemMessage(content=SYSTEM_PROMPT), *messages]
+            messages = [SystemMessage(content=render_system_prompt()), *messages]
 
         try:
             with Timer() as timer:

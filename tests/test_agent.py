@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import types
+from datetime import date
 
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
 
 from app.agent.graph import build_agent_graph
+from app.agent.prompts import render_system_prompt
 from tests.fakes import FakeChatModel, final_message, tool_call_message
 
 
@@ -199,3 +201,20 @@ def test_chat_service_confirmation_survives_a_stateless_http_roundtrip(tool_ctx,
     run_chat_turn(container, "Yes, proceed.", history=result_1.history, actor="test_actor")
 
     assert tool_ctx.surgery_service.get_surgery("S1001").status.value == "cancelled"
+
+
+def test_system_prompt_grounds_relative_dates_to_the_real_current_date():
+    """Regression test: found via live testing against Ollama -- without an
+    explicit current-date anchor, the model resolved "tomorrow" to a date from
+    its training data (2024) instead of the real current date, producing a
+    plausible-looking but wrong scheduled_date. The confirmation workflow
+    still caught it before anything was written, but the proposal itself was
+    wrong. render_system_prompt() now injects the real date explicitly."""
+    fixed_date = date(2026, 10, 14)
+    rendered = render_system_prompt(today=fixed_date)
+
+    assert "2026-10-14" in rendered
+    assert "Wednesday" in rendered  # 2026-10-14 is a Wednesday
+    assert "CURRENT DATE" in rendered
+    # The static protocol content is still present underneath the date anchor.
+    assert "never skip straight to confirmed=true" in rendered.lower()

@@ -137,3 +137,41 @@ def test_add_surgery_event_tool(tool_ctx):
 def test_add_surgery_event_tool_unknown_surgery(tool_ctx):
     with pytest.raises(NotFoundError):
         event_tools.add_surgery_event(tool_ctx, "S9999", "note_added", "x")
+
+
+def test_create_surgery_args_tolerates_explicit_null_for_defaulted_fields():
+    """Regression test: found live against Ollama (llama3.1:8b) -- the model
+    emitted {"duration_minutes": null, "priority": null, "confirmed": null}
+    instead of omitting those keys, which previously failed Pydantic
+    validation (a default only applies when a key is absent, not when it's
+    explicitly null) and forced an extra, avoidable confirmation round-trip."""
+    from app.tools.schema import CancelSurgeryArgs, CreateSurgeryArgs
+
+    args = CreateSurgeryArgs(
+        patient_id="P101", surgery_type="Knee Replacement", surgeon_id="SG001", operating_room="OR-2",
+        scheduled_date="2026-10-15", scheduled_time="14:00:00",
+        duration_minutes=None, priority=None, confirmed=None,
+    )
+    assert args.duration_minutes == 60
+    assert args.priority == "routine"
+    assert args.confirmed is False
+
+    cancel_args = CancelSurgeryArgs(surgery_id="S1001", reason="x", confirmed=None)
+    assert cancel_args.confirmed is False
+
+
+def test_create_surgery_tool_succeeds_with_null_optional_args(tool_ctx):
+    """End-to-end: a tool call shaped exactly like the one that failed live
+    (explicit nulls for duration_minutes/priority) must still execute once
+    confirmed, not raise a validation error."""
+    from app.tools.schema import CreateSurgeryArgs
+
+    validated = CreateSurgeryArgs(
+        patient_id="P101", surgery_type="Hernia Repair", surgeon_id="SG001", operating_room="OR-2",
+        scheduled_date=TOMORROW, scheduled_time=time(15, 0),
+        duration_minutes=None, priority=None, confirmed=True,
+    )
+    result = surgery_tools.create_surgery(tool_ctx, **validated.model_dump())
+    assert result["status"] == "executed"
+    assert result["surgery"]["duration_minutes"] == 60
+    assert result["surgery"]["priority"] == "routine"

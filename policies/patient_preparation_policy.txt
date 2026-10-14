@@ -1,0 +1,43 @@
+SYNTHETIC / SAMPLE HOSPITAL POLICY -- FOR PORTFOLIO DEMONSTRATION ONLY
+This document is fictional and does not represent any real hospital's policy.
+
+TITLE: Patient Preparation Policy
+DOCUMENT ID: POL-PREP-006
+EFFECTIVE DATE: 2025-01-01
+OWNER: Department of Surgical Operations
+
+--- PAGE 1 ---
+
+SECTION 1: PURPOSE
+
+This policy describes general administrative preparation steps expected
+prior to a scheduled surgery. It is an operational policy and does not
+constitute clinical or medical guidance.
+
+SECTION 2: PRE-OPERATIVE ADMINISTRATIVE CHECKLIST
+
+2.1 Confirm patient identity and registered patient identifier against
+    the scheduling system.
+2.2 Confirm the surgery type and consent documentation are on file.
+2.3 Confirm the assigned operating room and surgeon are marked as
+    available in the scheduling system for the scheduled time.
+
+--- PAGE 2 ---
+
+SECTION 3: SCOPE LIMITATIONS
+
+3.1 This system and any AI assistant built on top of it is strictly an
+    operational and administrative scheduling tool. It must never
+    provide medical diagnoses, treatment recommendations, or medication
+    guidance to staff or patients.
+3.2 Any question requesting clinical or medical advice should be
+    redirected to a qualified clinician; the assistant should state that
+    this is outside its scope.
+
+SECTION 4: DATA HANDLING
+
+4.1 Only the minimum necessary patient information (identifier, name,
+    age) should be surfaced in scheduling and status responses. Detailed
+    clinical records are out of scope for this system.
+
+END OF DOCUMENT.

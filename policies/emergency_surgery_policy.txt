@@ -1,0 +1,44 @@
+SYNTHETIC / SAMPLE HOSPITAL POLICY -- FOR PORTFOLIO DEMONSTRATION ONLY
+This document is fictional and does not represent any real hospital's policy.
+
+TITLE: Emergency Surgery Policy
+DOCUMENT ID: POL-EMER-005
+EFFECTIVE DATE: 2025-01-01
+OWNER: Department of Surgical Operations
+
+--- PAGE 1 ---
+
+SECTION 1: PURPOSE
+
+This policy describes how emergency surgeries are prioritized and
+scheduled outside of normal elective workflows.
+
+SECTION 2: CLASSIFICATION
+
+2.1 A surgery is classified as "emergency" priority when a delay in
+    treatment would pose an immediate risk to the patient's life or
+    long-term health.
+2.2 Emergency surgeries may be scheduled into OR-5 (the designated
+    emergency operating room) at any time, including outside standard
+    operating hours, and may take precedence over routine or urgent
+    cases when no emergency room is immediately free.
+
+--- PAGE 2 ---
+
+SECTION 3: SCHEDULING OVERRIDES
+
+3.1 Emergency surgeries are still subject to operating-room and
+    surgeon-conflict checks; the system does not allow double-booking
+    even for emergencies. Staff must select an alternative available
+    room or surgeon when a true conflict exists.
+3.2 Emergency surgery creation still requires confirmation from the
+    requesting clinician before the record is finalized, consistent with
+    the Surgery Scheduling Policy.
+
+SECTION 4: CANCELLATION OF EMERGENCY CASES
+
+4.1 An emergency surgery may only be cancelled if the treating surgeon
+    confirms the procedure is no longer clinically indicated, per the
+    Surgery Cancellation Policy, Section 4.3.
+
+END OF DOCUMENT.

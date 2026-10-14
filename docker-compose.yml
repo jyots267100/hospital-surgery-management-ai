@@ -1,0 +1,37 @@
+services:
+  backend:
+    build: .
+    image: hospital-surgery-ai:latest
+    container_name: hospital-surgery-ai-backend
+    env_file:
+      - .env
+    environment:
+      - CHROMA_PERSIST_DIRECTORY=/app/chroma_data
+      - DATA_DIR=/app/data
+      - POLICY_DOCS_DIR=/app/policies
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./chroma_data:/app/chroma_data
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build: .
+    image: hospital-surgery-ai:latest
+    container_name: hospital-surgery-ai-frontend
+    env_file:
+      - .env
+    environment:
+      - API_BASE_URL=http://backend:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      backend:
+        condition: service_healthy
+    command: streamlit run frontend/streamlit_app.py --server.port 8501 --server.address 0.0.0.0

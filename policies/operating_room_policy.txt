@@ -1,0 +1,52 @@
+SYNTHETIC / SAMPLE HOSPITAL POLICY -- FOR PORTFOLIO DEMONSTRATION ONLY
+This document is fictional and does not represent any real hospital's policy.
+
+TITLE: Operating Room Policy
+DOCUMENT ID: POL-OR-004
+EFFECTIVE DATE: 2025-01-01
+OWNER: Department of Surgical Operations
+
+--- PAGE 1 ---
+
+SECTION 1: PURPOSE
+
+This policy governs the allocation and use of operating rooms (ORs)
+across the surgical department.
+
+SECTION 2: ROOM DESIGNATIONS
+
+2.1 Each operating room has a designated primary use. OR-5 is designated
+    as the Emergency operating room and is prioritized for emergency
+    cases at any time of day.
+2.2 OR-1 through OR-4 are general-purpose operating rooms available for
+    routine and urgent procedures during standard scheduling hours.
+
+--- PAGE 2 ---
+
+SECTION 3: AVAILABILITY CHECKS
+
+3.1 Before a surgery is scheduled or rescheduled into a room, the system
+    must verify that the room has no overlapping booking for the
+    requested date and time window.
+3.2 Availability queries (for example "which rooms are available
+    tomorrow between 2 PM and 4 PM") must check all active, non-cancelled
+    surgeries in that room for the requested window and report any
+    conflicting surgery.
+
+SECTION 4: MAINTENANCE AND BLACKOUT WINDOWS
+
+4.1 Operating rooms may be temporarily unavailable for scheduled
+    maintenance. This portfolio system does not model maintenance
+    blackout windows; in a production deployment, maintenance windows
+    would be stored alongside the room record and checked during
+    availability queries.
+
+--- PAGE 3 ---
+
+SECTION 5: UTILIZATION REPORTING
+
+5.1 Operating room utilization should be reported as the percentage of
+    available operating time (assumed to be an 8-hour operating day per
+    room) that is booked by active, non-cancelled surgeries.
+
+END OF DOCUMENT.

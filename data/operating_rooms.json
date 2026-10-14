@@ -1,0 +1,27 @@
+[
+  {
+    "room_id": "OR-1",
+    "name": "Operating Room 1",
+    "floor": "2nd Floor"
+  },
+  {
+    "room_id": "OR-2",
+    "name": "Operating Room 2",
+    "floor": "2nd Floor"
+  },
+  {
+    "room_id": "OR-3",
+    "name": "Operating Room 3",
+    "floor": "3rd Floor"
+  },
+  {
+    "room_id": "OR-4",
+    "name": "Operating Room 4",
+    "floor": "3rd Floor"
+  },
+  {
+    "room_id": "OR-5",
+    "name": "Operating Room 5 (Emergency)",
+    "floor": "Ground Floor"
+  }
+]

@@ -1,0 +1,29 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.1
+python-dotenv==1.0.1
+
+langchain==0.3.14
+langchain-core==0.3.29
+langgraph==0.2.62
+langchain-google-genai==2.0.8
+
+sentence-transformers==3.3.1
+chromadb==0.5.23
+
+pypdf==5.1.0
+
+streamlit==1.41.1
+requests==2.32.3
+pandas==2.2.3
+# Pinned below the version that requires NumPy 2.0 -- this project's other
+# dependencies (torch/chromadb/transformers) resolve to NumPy 1.26.x.
+pyarrow==17.0.0
+
+httpx==0.28.1
+tenacity==9.0.0
+
+pytest==8.3.4
+pytest-asyncio==0.25.2
+pytest-cov==6.0.0

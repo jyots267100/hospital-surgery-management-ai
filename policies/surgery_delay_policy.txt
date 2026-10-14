@@ -1,0 +1,57 @@
+SYNTHETIC / SAMPLE HOSPITAL POLICY -- FOR PORTFOLIO DEMONSTRATION ONLY
+This document is fictional and does not represent any real hospital's policy.
+
+TITLE: Surgery Delay Policy
+DOCUMENT ID: POL-DELAY-003
+EFFECTIVE DATE: 2025-01-01
+OWNER: Department of Surgical Operations
+
+--- PAGE 1 ---
+
+SECTION 1: PURPOSE
+
+This policy defines how delays to scheduled surgeries are recorded and
+communicated, so operations staff can monitor operating room throughput
+and patient impact.
+
+SECTION 2: WHEN A SURGERY IS CONSIDERED DELAYED
+
+2.1 A surgery is considered delayed when its actual or expected start
+    time is later than its originally scheduled time by more than 15
+    minutes.
+2.2 Delays must be recorded with both a delay duration in minutes and a
+    delay reason, for example: "preceding case overran", "awaiting
+    clearance", "equipment preparation", or "surgeon delayed in another
+    procedure".
+
+--- PAGE 2 ---
+
+SECTION 3: RECORDING DELAYS
+
+3.1 When a surgery is marked as delayed, the system must update its
+    status to "delayed" and record delay_minutes and delay_reason.
+3.2 A delayed surgery may subsequently transition to "confirmed",
+    "in_progress", or "cancelled" once the delay is resolved or the
+    decision is made to cancel.
+3.3 Marking a surgery as delayed is a status transition and should be
+    logged as an audit event noting the previous status, new status, and
+    delay reason.
+
+SECTION 4: ESCALATION
+
+4.1 Delays exceeding 60 minutes should be flagged to the operations
+    dashboard as high-impact delays so coordinators can notify affected
+    patients and downstream procedures.
+4.2 Repeated delays attributed to the same operating room or surgeon on
+    the same day should be reviewed by the operations coordinator.
+
+--- PAGE 3 ---
+
+SECTION 5: REPORTING
+
+5.1 The operational dashboard should expose the average delay in minutes
+    across all delayed surgeries for the current reporting period.
+5.2 Delay data must never be deleted; it is retained as part of the
+    surgery's audit history.
+
+END OF DOCUMENT.

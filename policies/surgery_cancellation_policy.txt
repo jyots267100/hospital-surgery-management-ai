@@ -1,0 +1,93 @@
+SYNTHETIC / SAMPLE HOSPITAL POLICY -- FOR PORTFOLIO DEMONSTRATION ONLY
+This document is fictional and does not represent any real hospital's policy.
+
+TITLE: Surgery Cancellation Policy
+DOCUMENT ID: POL-CANCEL-001
+EFFECTIVE DATE: 2025-01-01
+OWNER: Department of Surgical Operations
+
+--- PAGE 1 ---
+
+SECTION 1: PURPOSE
+
+This policy defines the conditions under which a scheduled surgery may be
+cancelled, the notice periods required, and the documentation that must
+accompany a cancellation request. It applies to all elective, urgent, and
+emergency surgical procedures scheduled through the Hospital Surgery
+Management system.
+
+SECTION 2: SCOPE
+
+This policy applies to scheduling staff, surgeons, and operations
+coordinators who have authority to request or approve the cancellation of
+a scheduled surgery.
+
+--- PAGE 2 ---
+
+SECTION 3: CANCELLATION ELIGIBILITY
+
+A surgery may be cancelled under the following conditions:
+
+3.1 The surgery has a status of "scheduled", "confirmed", or "delayed".
+    Surgeries with a status of "completed" can never be cancelled.
+3.2 The surgery has not yet transitioned to "in_progress". A surgery that
+    has started cannot be cancelled; it may only be marked as completed or
+    delayed by the attending surgical team.
+3.3 A documented reason is recorded with every cancellation request,
+    including but not limited to: patient-initiated cancellation, medical
+    contraindication identified during pre-operative assessment, surgeon
+    unavailability, or operating room unavailability due to equipment
+    failure.
+
+SECTION 4: NOTICE PERIODS
+
+4.1 Routine elective surgeries: cancellation should be requested at least
+    24 hours in advance where possible, although the system does not block
+    cancellations requested with shorter notice.
+4.2 Urgent surgeries: may be cancelled at any time prior to the start of
+    the procedure if a qualifying medical or logistical reason is
+    recorded.
+4.3 Emergency surgeries: cancellation is permitted only when the treating
+    surgeon confirms the procedure is no longer clinically indicated.
+
+--- PAGE 3 ---
+
+SECTION 5: APPROVAL AND CONFIRMATION
+
+5.1 Every cancellation is a state-changing action. The system (including
+    any AI assistant) must present the proposed cancellation -- including
+    the surgery identifier, scheduled time, and eligibility assessment --
+    to the requesting staff member and obtain explicit confirmation before
+    the cancellation is executed.
+5.2 Cancellations must never be executed automatically from a single
+    natural-language request without a confirmation step.
+5.3 Every cancellation must generate an audit event recording the actor,
+    timestamp, previous status, new status, and reason.
+
+SECTION 6: POST-CANCELLATION HANDLING
+
+6.1 A cancelled surgery remains in the system with a status of
+    "cancelled" for audit and reporting purposes. Records are never
+    deleted as part of a routine cancellation.
+6.2 If the patient still requires the procedure, a new surgery should be
+    scheduled rather than attempting to reactivate a cancelled record.
+
+--- PAGE 4 ---
+
+SECTION 7: EXAMPLES
+
+Example A: A routine knee replacement scheduled for next week is
+cancelled by the patient two days in advance. This is a standard
+cancellation; no special approval is required beyond standard
+confirmation.
+
+Example B: A same-day urgent cardiac procedure is cancelled because the
+surgeon identifies a new contraindication during pre-operative review.
+This is permitted provided the reason is documented and confirmation is
+obtained from the requesting clinician.
+
+Example C: A request to cancel a surgery that is already marked
+"completed" must be rejected, since completed procedures cannot be
+cancelled under Section 3.1.
+
+END OF DOCUMENT.

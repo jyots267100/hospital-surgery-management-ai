@@ -1,0 +1,71 @@
+SYNTHETIC / SAMPLE HOSPITAL POLICY -- FOR PORTFOLIO DEMONSTRATION ONLY
+This document is fictional and does not represent any real hospital's policy.
+
+TITLE: Surgery Scheduling Policy
+DOCUMENT ID: POL-SCHED-002
+EFFECTIVE DATE: 2025-01-01
+OWNER: Department of Surgical Operations
+
+--- PAGE 1 ---
+
+SECTION 1: PURPOSE
+
+This policy governs how new surgeries are scheduled into operating rooms
+and assigned to surgeons, to avoid conflicts and ensure patient safety.
+
+SECTION 2: REQUIRED INFORMATION
+
+A new surgery request must include:
+
+2.1 A valid, registered patient identifier.
+2.2 A surgery type/procedure description.
+2.3 A valid, registered surgeon identifier.
+2.4 A valid, registered operating room identifier.
+2.5 A requested date and start time.
+2.6 An estimated duration in minutes. If omitted, a default duration
+    appropriate to the procedure type should be used.
+2.7 A priority classification: routine, urgent, or emergency.
+
+--- PAGE 2 ---
+
+SECTION 3: CONFLICT PREVENTION
+
+3.1 An operating room may not host two overlapping surgeries. The system
+    must reject or flag any request that would double-book a room.
+3.2 A surgeon may not be assigned to two overlapping surgeries. The
+    system must reject or flag any request that would double-book a
+    surgeon.
+3.3 When a conflict is detected, the system should surface the
+    conflicting surgery identifier so staff can choose an alternative
+    time, room, or surgeon.
+
+SECTION 4: PRIORITY HANDLING
+
+4.1 Emergency surgeries may be scheduled into any operating room
+    designated for emergency use, including outside of normal business
+    hours.
+4.2 Routine and urgent surgeries should preferentially be scheduled
+    during standard operating hours (08:00-18:00) unless clinically
+    necessary otherwise.
+
+--- PAGE 3 ---
+
+SECTION 5: CONFIRMATION REQUIREMENT
+
+5.1 Creating a new surgery is a state-changing action. The proposed
+    surgery details must be presented to the requesting staff member for
+    confirmation before the record is created.
+5.2 Every created surgery must generate an audit event recording the
+    actor, timestamp, and the full set of scheduled details.
+
+SECTION 6: EXAMPLES
+
+Example A: "Schedule a knee replacement for patient P102 with Dr. Sharma
+tomorrow at 10 AM in OR-2" is a valid routine scheduling request provided
+Dr. Sharma and OR-2 are both free at that time.
+
+Example B: A request that would place a new surgery in an operating room
+already booked for another procedure at the same time must be rejected
+with a clear conflict explanation.
+
+END OF DOCUMENT.
